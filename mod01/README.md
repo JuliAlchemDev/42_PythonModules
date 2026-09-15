@@ -35,7 +35,6 @@ Streamline the plant creation process by instantiating multiple plants with vary
 - Object instantiation with initial parameters
 - Creating multiple objects with different attributes
 
-
 ### Exercise 4: Garden Security System
 
 Protect plant data through encapsulation and validation to ensure data integrity.
@@ -44,3 +43,12 @@ Protect plant data through encapsulation and validation to ensure data integrity
 - Data encapsulation with protected attributes (_attribute)
 - Getter and setter methods for controlled access
 - Input validation and error handling
+
+### Exercise 5: Specialized Plant Types
+
+Handle different plant types by using inheritance to share common features and specialize behavior.
+
+**Concepts:**
+- Inheritance and parent-child class relationships
+- Method overriding with super()
+- Specialized attributes for different plant types
