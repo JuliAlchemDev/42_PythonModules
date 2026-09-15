@@ -52,3 +52,13 @@ Handle different plant types by using inheritance to share common features and s
 - Inheritance and parent-child class relationships
 - Method overriding with super()
 - Specialized attributes for different plant types
+
+### Exercise 6: Garden Analytics
+
+Implement advanced OOP patterns including static/class methods, nested classes, and multi-level inheritance for complex data tracking.
+
+**Concepts:**
+- Static methods and class methods
+- Nested classes for encapsulation
+- Multi-level inheritance chains
+- Statistical data tracking
