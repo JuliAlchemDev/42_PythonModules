@@ -34,3 +34,13 @@ Streamline the plant creation process by instantiating multiple plants with vary
 **Concepts:**
 - Object instantiation with initial parameters
 - Creating multiple objects with different attributes
+
+
+### Exercise 4: Garden Security System
+
+Protect plant data through encapsulation and validation to ensure data integrity.
+
+**Concepts:**
+- Data encapsulation with protected attributes (_attribute)
+- Getter and setter methods for controlled access
+- Input validation and error handling
