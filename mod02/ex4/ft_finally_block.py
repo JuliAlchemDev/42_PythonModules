@@ -42,7 +42,7 @@ def test_watering_system() -> None:
     except PlantError as error:
         print(f"Caught PlantError: {error}")
         print(".. ending tests and returning to main")
-        return 
+        return
     finally:
         print("Closing watering system\n")
 
