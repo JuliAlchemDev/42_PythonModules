@@ -60,3 +60,16 @@ Generate and consume data streams on demand with generators.
 - Pulling values manually with `next()`
 - Consuming a generator directly in a `for` loop
 - Type hints for generators with `typing.Generator`
+
+
+### Exercise 6: Data Alchemist
+
+Transform and filter data with list and dictionary comprehensions.
+
+**Concepts**:
+
+- List comprehensions: transforming and filtering (`[expr for x in items if cond]`)
+- Dictionary comprehensions (`{key: value for ...}`)
+- Comprehensions on sets (`{x for x in ...}`)
+- Filtering with `if` at the end vs. transforming with `if ... else` at the start
+- Building a new collection from another (equivalent to a `for` loop with `append`)
