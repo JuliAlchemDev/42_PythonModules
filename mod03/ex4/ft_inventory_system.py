@@ -48,16 +48,18 @@ def main() -> None:
         print(f"Item list: {items}")
         print(f"Total quantity of the {len(items)} items: {total_k}")
 
-        for name, k in inventory.items():
-            pct = round((k * 100) / total_k, 1)
-            print(f"Item {name} represents {pct}%")
+        if total_k > 0:
+            for name, k in inventory.items():
+                pct = round((k * 100) / total_k, 1)
+                print(f"Item {name} represents {pct}%")
 
-        most, least = get_most_least_items(inventory)
-        print(f"Item most abundant: {most[0]} with quantity {most[1]}")
-        print(f"Item least abundant: {least[0]} with quantity {least[1]}")
+            most, least = get_most_least_items(inventory)
+            print(f"Item most abundant: {most[0]} with quantity {most[1]}")
+            print("Item least abundant:",
+                  f"{least[0]} with quantity {least[1]}")
 
-        inventory.update({'magic_item': 1})
-        print(f"Updated inventory: {inventory}")
+    inventory.update({'magic_item': 1})
+    print(f"Updated inventory: {inventory}")
 
 
 if __name__ == "__main__":
