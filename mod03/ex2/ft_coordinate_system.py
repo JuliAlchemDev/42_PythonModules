@@ -1,23 +1,25 @@
 import math
 
 
-def get_player_pos() -> tuple:
-    valid_coords = []
-    data = input("Enter new coordinates as floats in format 'x,y,z': ")
-    coords = data.split(",")
+def get_player_pos() -> tuple[float, float, float]:
+    while True:
+        data = input("Enter new coordinates as floats in format 'x,y,z': ")
+        coords = data.split(",")
 
-    if len(coords) != 3:
-        print("Invalid syntax")
-        return get_player_pos()
-    else:
+        if len(coords) != 3:
+            print("Invalid syntax")
+            continue
+
+        valid_coords = []
         try:
             for coord in coords:
                 valid_coords.append(float(coord))
         except ValueError as error:
             print(f"Error on parameter '{coord.strip()}': {error}")
-            return get_player_pos()
+            continue
 
-    return tuple(valid_coords)
+        x, y, z = valid_coords
+        return (x, y, z)
 
 
 def main() -> None:
@@ -25,6 +27,7 @@ def main() -> None:
     print("\nGet a first set of coordinates")
     first_set = get_player_pos()
     x1, y1, z1 = first_set
+
     print(f"Got a first tuple: {first_set}")
     print(f"It includes: X={x1}, Y={y1}, Z={z1}")
     distance1 = round(math.sqrt(x1**2 + y1**2 + z1**2), 4)
