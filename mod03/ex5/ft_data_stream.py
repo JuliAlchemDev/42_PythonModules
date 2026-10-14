@@ -1,5 +1,7 @@
 import random
 import typing
+
+
 PLAYERS = [
     "Alice", "Bob", "Charlie", "Diana", "Ethan",
     "Fiona", "George", "Hannah", "Ivan", "Julia",
@@ -32,7 +34,7 @@ def main() -> None:
     print("=== Game Data Stream Processor ===")
     event = gen_event()
 
-    for i in range(10):  # range(1000)
+    for i in range(1000):
         name, action = next(event)
         print(f"Event {i}: Player {name} did action {action}")
 
@@ -40,7 +42,7 @@ def main() -> None:
     for _ in range(10):
         name, action = next(event)
         events.append((name, action))
-    print(f"Built list of 10 events:{events}")
+    print(f"Built list of 10 events: {events}")
 
     for get_event in consume_event(events):
         print(f"Got event from list: {get_event}")
