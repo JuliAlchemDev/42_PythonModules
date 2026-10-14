@@ -6,10 +6,8 @@ def validate_scores(args: list[str]) -> list[int]:
     for arg in args:
         try:
             scores.append(int(arg))
-
         except ValueError:
             print(f"Invalid parameter: '{arg}'")
-            # continue
     return scores
 
 
