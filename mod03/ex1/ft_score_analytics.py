@@ -1,7 +1,7 @@
 import sys
 
 
-def validate_scores(args: list) -> list:
+def validate_scores(args: list[str]) -> list[int]:
     scores = []
     for arg in args:
         try:
@@ -9,7 +9,7 @@ def validate_scores(args: list) -> list:
 
         except ValueError:
             print(f"Invalid parameter: '{arg}'")
-            continue
+            # continue
     return scores
 
 
