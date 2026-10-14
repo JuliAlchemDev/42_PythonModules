@@ -38,3 +38,15 @@ Store and manage 3D coordinates using tuples, validate user input with exception
 - Retrying input until valid data is provided
 - Using functions to encapsulate and return reusable logic
 
+
+### Exercise 5: Stream Wizard
+
+Generate and consume data streams on demand with generators.
+
+**Concepts**:
+
+- Generators and the `yield` keyword
+- Infinite generators and lazy evaluation (memory efficiency)
+- Pulling values manually with `next()`
+- Consuming a generator directly in a `for` loop
+- Type hints for generators with `typing.Generator`
