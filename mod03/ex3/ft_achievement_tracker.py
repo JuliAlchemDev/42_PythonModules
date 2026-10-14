@@ -34,23 +34,24 @@ def main() -> None:
         all_achievements = all_achievements.union(achievements_set)
     print(f"\nAll distinct achievements: {all_achievements}\n")
 
-
 # Common achievements:
     common_achs: set[str] = set(list(data.values())[0])
     for ach_set in data.values():
         common_achs = common_achs.intersection(ach_set)
     print(f"Common achievements: {common_achs}")
     print()
+
 # Unique achievements:
     for player, achs_set in data.items():
-        base = achs_set
+        own_achs = achs_set
         other_achs: set[str] = set()
         for name, achs in data.items():
             if player != name:
                 other_achs = other_achs.union(achs)
-        uniques = base.difference(other_achs)
+        uniques = own_achs.difference(other_achs)
         print(f"Only {player} has: {uniques}")
     print()
+
 # Missing:
     for player, achievements_set in data.items():
         print(f"{player} is missing: {
