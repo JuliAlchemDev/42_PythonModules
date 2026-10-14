@@ -49,6 +49,18 @@ Use sets to store unique achievements and analyze them across players.
 - Set operations: `union()`, `intersection()` and `difference()`
 - Random selection with the `random` module (`random.choices()`, `random.randint()`)
 
+### Exercise 4: Inventory Master
+
+Build and analyze an inventory with dictionaries, parsing `name:quantity` command-line arguments.
+
+**Concepts**:
+
+- Dictionaries: key-value pairs with unique keys
+- Dictionary views: `dict.keys()` and `dict.values()` (and converting them with `list()`)
+- Adding and updating entries with `dict.update()`
+- Checking key membership with `in`
+- Insertion order in dictionaries (used for the tie-breaking rule)
+
 ### Exercise 5: Stream Wizard
 
 Generate and consume data streams on demand with generators.
