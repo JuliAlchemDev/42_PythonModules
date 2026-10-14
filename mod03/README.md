@@ -38,6 +38,16 @@ Store and manage 3D coordinates using tuples, validate user input with exception
 - Retrying input until valid data is provided
 - Using functions to encapsulate and return reusable logic
 
+### Exercise 3: Achievement Hunter
+
+Use sets to store unique achievements and analyze them across players.
+
+**Concepts**:
+
+- Sets: unordered collections of unique elements
+- Creating sets with `set()` (and why an empty set prints as `set()`, not `{}`)
+- Set operations: `union()`, `intersection()` and `difference()`
+- Random selection with the `random` module (`random.choices()`, `random.randint()`)
 
 ### Exercise 5: Stream Wizard
 
