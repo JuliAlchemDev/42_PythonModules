@@ -5,23 +5,23 @@ def get_inventory(data: list[str]) -> dict[str, int]:
     inventory: dict[str, int] = {}
 
     for item in data:
-        if ":" not in item:
+        item_data = item.split(":")
+
+        if len(item_data) != 2 or item_data[0] == "":
             print(f"Error - invalid parameter '{item}'")
             continue
 
-        data = item.split(":")
-        name = data[0]
-
+        name, quantity = item_data
         if name in inventory.keys():
             print(f"Redundant item '{name}' - discarding")
             continue
 
         try:
             inventory.update({
-                name: int(data[1])
+                name: int(quantity)
             })
         except ValueError as error:
-            print(f"Quantity error for '{data[0]}': {error}")
+            print(f"Quantity error for '{name}': {error}")
 
     return inventory
 
