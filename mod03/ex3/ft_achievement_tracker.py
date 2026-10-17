@@ -54,8 +54,8 @@ def main() -> None:
 
 # Missing:
     for player, achievements_set in data.items():
-        print(f"{player} is missing: {
-            set(ACHIEVEMENTS).difference(achievements_set)}")
+        missing = set(ACHIEVEMENTS).difference(achievements_set)
+        print(f"{player} is missing: {missing}")
 
 
 if __name__ == "__main__":
