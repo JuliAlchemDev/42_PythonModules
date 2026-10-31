@@ -34,9 +34,9 @@ def main() -> None:
                 read_file(file)
             except UnicodeDecodeError as error:
                 print(f"Error reading file '{file_name}': {error}", "\n")
-        finally:
-            file.close()
-            print(f"File '{file_name}' closed.")
+            finally:
+                file.close()
+                print(f"File '{file_name}' closed.")
 
 
 if __name__ == "__main__":
