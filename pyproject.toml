@@ -1,0 +1,6 @@
+[tool.mypy]
+strict = true
+exclude = [
+    '^\.venv/',
+    '/main\.py$',
+]
