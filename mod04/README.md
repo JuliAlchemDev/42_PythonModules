@@ -36,6 +36,28 @@ Transform the contents of a file by adding a special archive character (`#`) at 
 - Handling `KeyboardInterrupt` when the user cancels the input with `Ctrl+C`
 - Understanding relative paths (`../`) when choosing an output location
 
+### Exercise 2: Stream Management
+
+Adapt the previous exercises to use Python's standard input, output, and error streams. Read user input without using `input()` and route error messages to the standard error stream.
+
+**Concepts**:
+
+- Understanding the three standard streams: `sys.stdin`, `sys.stdout`, and `sys.stderr`
+- Using `sys.stdout.write()` instead of `print()` to control output explicitly, including newline characters
+- Reading user input with `sys.stdin.readline()` instead of `input()`
+- Understanding that `readline()` retains the trailing newline character (`\n`)
+- Using `sys.stdout.flush()` to ensure buffered output, such as prompts, is displayed before waiting for input
+- Redirecting error messages to `sys.stderr` with `print(..., file=sys.stderr)` or `sys.stderr.write()`
+- Understanding the difference between standard output and standard error, and redirecting them independently from the shell (`>`, `2>`)
+```bash
+# Example:
+$ python3 program.py > output.txt 2> errors.txt
+```
+- Handling `KeyboardInterrupt` when the user cancels an operation with `Ctrl+C`
+- Handling errors during file opening, writing, and closing
+- Understanding buffering and why a write operation can appear successful even if an error occurs later during `flush()` or `close()`
+- Tracking whether data was successfully saved before displaying the final status message
+
 ## Debugging: Checking File Closure and Resource Leaks
 
 Three useful debugging techniques when working with files in Python:
@@ -77,3 +99,6 @@ tracemalloc.start()
 `tracemalloc` tracks memory allocations and can help investigate memory usage and allocation origins. It does not directly detect unclosed files.
 
 **Note:** These are debugging techniques, not part of the exercise's authorized functions.
+
+
+
