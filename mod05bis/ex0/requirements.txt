@@ -1,0 +1,7 @@
+# pip install -r requirements.txt
+# (==) exact version | (>=) same or higher | (~=) compatible release
+# pip list
+
+pandas>=2.1.0
+numpy>=1.25.0
+
