@@ -13,10 +13,6 @@ def show_hint(module: str) -> None:
 
 
 def main() -> None:
-    """
-    [TODO]: pyproject.toml  & poetry
-    """
-
     status = "Loading reagents..."
     all_ok = True
     print(f"\nREAGENT STATUS: {status}\n")

@@ -25,12 +25,18 @@ Detect whether Python is running inside a virtual environment and display inform
 Create a dependency loader that checks whether the required external packages (`pandas` and `numpy`) are installed and can be imported, displays their versions, and provides installation instructions when something goes wrong.
 
 **Concepts**:
+
 - Declaring dependencies in `requirements.txt`.
 - Installing dependencies with `pip install -r requirements.txt`.
 - Using `importlib.import_module()` for dynamic imports.
 - Retrieving package versions with `__version__`.
 - Handling `ModuleNotFoundError` and `ImportError`.
 - Providing installation instructions with pip and Poetry.
-- Understanding the difference between an installed package and a package that can be successfully imported.
+- Understanding the difference between an installed package and a successfully imported package.
 - Dependency version constraints (`>=`).
 - Understanding pip dependency installation and resolution.
+- Declaring project dependencies in `pyproject.toml`.
+- Managing dependencies and virtual environments with Poetry.
+- Understanding the role of `poetry.lock` in reproducible installations.
+- Understanding dependency isolation and the difference between pip and Poetry environments.
+
