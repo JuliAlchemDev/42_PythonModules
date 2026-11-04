@@ -5,6 +5,8 @@ def secure_archive(
         file_name: str,
         mode: str = "r",
         content: str = "") -> tuple[bool, str]:
+    if mode not in ("r", "w"):
+        return (False, "Invalid mode")
     try:
         with open(file_name, mode) as file:
             if mode == "w":
@@ -19,7 +21,6 @@ def secure_archive(
 
 
 def main() -> None:
-    # ways to handle data[0] == error msg
     fn_name = "secure_archive"
 
     print("=== Cyber Archives Security ===")
@@ -35,7 +36,10 @@ def main() -> None:
     print(data)
 
     print(f"\nUsing '{fn_name}' to write previous content to a new file:")
-    print(secure_archive("new_ancient_fragment.txt", "w", data[1]))
+    if data[0]:
+        print(secure_archive("new_ancient_fragment.txt", "w", data[1]))
+    else:
+        print("Cannot write: previous read operation failed.")
 
 
 if __name__ == "__main__":
