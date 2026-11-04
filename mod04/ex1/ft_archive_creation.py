@@ -12,7 +12,7 @@ def read_file(file_name: str) -> str | None:
         FileNotFoundError,
         IsADirectoryError
     ) as error:
-        print(f"Error opening file '{file_name}': {error}", "\n")
+        print(f"Error opening file '{file_name}': {error}")
     else:
         try:
             content = file.read()
@@ -28,10 +28,6 @@ def read_file(file_name: str) -> str | None:
 
 
 def transform_and_save(content: str) -> None:
-    """
-    [] .png ??
-    [] should rewrite ??
-    """
     transform = content.split("\n")
     transformed = "#\n".join(transform)
 
@@ -54,7 +50,7 @@ def transform_and_save(content: str) -> None:
                 except OSError as error:
                     print(f"Error writing: {error}", "\n")
                 else:
-                    print(f"Data saved in file '{file.name}'.\n")
+                    print(f"Data saved in file '{file.name}'.")
                 finally:
                     file.close()
         else:
@@ -68,10 +64,10 @@ def main() -> None:
     args_count = len(args)
 
     if args_count != 2:
-        print(f"Usage: {args[0]} <file>\n")
+        print(f"Usage: {args[0]} <file>")
     else:
         file_name = args[1]
-        print("=== Cyber Archives Recovery ===")
+        print("=== Cyber Archives Recovery & Preservation ===")
 
         print(f"Accessing file '{file_name}'")
         content = read_file(file_name)
