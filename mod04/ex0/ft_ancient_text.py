@@ -27,7 +27,7 @@ def main() -> None:
             PermissionError,
             FileNotFoundError,
             IsADirectoryError
-                ) as error:
+        ) as error:
             print(f"Error opening file '{file_name}': {error}", "\n")
         else:
             try:

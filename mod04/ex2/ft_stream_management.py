@@ -13,8 +13,7 @@ def read_file(file_name: str) -> str | None:
     ) as error:
         print("[STDERR]", file=sys.stderr, end=" ")
         sys.stderr.write(
-            f"Error opening file '{file_name}': {error}"
-            )
+            f"Error opening file '{file_name}': {error}")
         sys.stderr.write("\n")
     else:
         try:
@@ -27,8 +26,7 @@ def read_file(file_name: str) -> str | None:
         except UnicodeDecodeError as error:
             print("[STDERR]", file=sys.stderr, end=" ")
             sys.stderr.write(
-                f"Error reading file '{file_name}': {error}"
-                )
+                f"Error reading file '{file_name}': {error}")
             sys.stderr.write("\n")
         finally:
             file.close()

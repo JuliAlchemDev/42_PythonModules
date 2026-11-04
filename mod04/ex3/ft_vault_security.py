@@ -4,8 +4,7 @@
 def secure_archive(
         file_name: str,
         mode: str = "r",
-        content: str = ""
-        ) -> tuple[bool, str]:
+        content: str = "") -> tuple[bool, str]:
     try:
         with open(file_name, mode) as file:
             if mode == "w":
