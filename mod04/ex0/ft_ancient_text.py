@@ -28,12 +28,12 @@ def main() -> None:
             FileNotFoundError,
             IsADirectoryError
         ) as error:
-            print(f"Error opening file '{file_name}': {error}", "\n")
+            print(f"Error opening file '{file_name}': {error}")
         else:
             try:
                 read_file(file)
             except UnicodeDecodeError as error:
-                print(f"Error reading file '{file_name}': {error}", "\n")
+                print(f"Error reading file '{file_name}': {error}")
             finally:
                 file.close()
                 print(f"File '{file_name}' closed.")
