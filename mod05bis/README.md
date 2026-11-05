@@ -35,8 +35,30 @@ Create a dependency loader that checks whether the required external packages (`
 - Understanding the difference between an installed package and a successfully imported package.
 - Dependency version constraints (`>=`).
 - Understanding pip dependency installation and resolution.
+<<<<<<< HEAD
 - Declaring project dependencies in `pyproject.toml`.
 - Managing dependencies and virtual environments with Poetry.
 - Understanding the role of `poetry.lock` in reproducible installations.
 - Understanding dependency isolation and the difference between pip and Poetry environments.
 
+=======
+
+
+### Exercise 2: The Alembic
+
+Build a modular Python package and test different import mechanisms to access functions from standalone modules and packages.
+
+**Concepts**:
+
+| **Module** | **Package** |
+|---|---|
+| A `.py` file containing reusable code (functions, variables, etc.). | A directory grouping related Python modules. |
+
+- `__init__.py`: initializes a package and defines its public interface.
+- `import module_name` and `from module_name import function_name`.
+- Accessing module attributes using dot notation (`module.function()`).
+- **Relative imports:** referencing modules within the current package (`from .elements import create_air`).
+- **Package interface:** exposing selected functions through the package namespace.
+- Difference between a function defined in a module and one exposed by the package.
+- `AttributeError`: accessing an unavailable attribute.
+>>>>>>> b864585 (feat: implement alchemy package and module imports)
