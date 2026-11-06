@@ -59,3 +59,28 @@ Build a modular Python package and test different import mechanisms to access fu
 - **Package interface:** exposing selected functions through the package namespace.
 - Difference between a function defined in a module and one exposed by the package.
 - `AttributeError`: accessing an unavailable attribute.
+
+
+#### Sources
+- Absolute and Relative Imports in Python [geeksforgeeks](https://www.geeksforgeeks.org/python/absolute-and-relative-imports-in-python/)
+
+
+### Exercise 3: Distillation and Transmutation
+
+Build a potion system using nested imports, combining modules from different locations and accessing functions across packages and subpackages.
+
+**Concepts**:
+
+- Importing modules from different locations within a project.
+- Absolute imports: referencing modules from the project import path.
+- Relative imports: referencing modules from the current package and its parent packages.
+- Nested packages and subpackages.
+- Using `from ... import ...` to access modules directly.
+- Using `import ...` to access nested modules through dot notation.
+- Import aliases to distinguish modules with the same name.
+- Understanding package context when executing modules.
+- Running a package module with `python -m package.module`.
+- Combining absolute and relative imports within the same module.
+
+### Exercise 4: Avoid the Explosion
+
