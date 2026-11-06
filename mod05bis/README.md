@@ -84,3 +84,19 @@ Build a potion system using nested imports, combining modules from different loc
 
 ### Exercise 4: Avoid the Explosion
 
+#### Part 1: The Light Grimoire
+
+Implement a working spellbook and ingredient validator using mutually dependent modules, while avoiding circular import failures.
+
+**Concepts**:
+
+- Circular dependencies between Python modules.
+- Mutual imports between modules within the same package.
+- Understanding Python's module initialization process.
+- Understanding how `sys.modules` caches imported modules.
+- Importing modules versus importing specific functions.
+- Delaying imports until function execution to avoid circular import failures.
+- Understanding partially initialized modules.
+- Designing modules to manage mutual dependencies safely.
+
+<!-- sys.modules sys.path -->
