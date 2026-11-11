@@ -1,19 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-
-# class TextProcessor(DataProcessor):
-#     pass
-
-
 # class LogProcessor(DataProcessor):
 #     pass
 
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self.queue = []
-        self.rank = 0
+        self.queue: list[str] = []
+        self.rank: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -24,6 +19,8 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
+        if not self.queue:
+            raise IndexError("No data in queue")
         rank = self.rank
         self.rank += 1
         item = self.queue.pop(0)
@@ -47,6 +44,22 @@ class NumericProcessor(DataProcessor):
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
             raise ValueError("Improper numeric data")
+        if isinstance(data, list):
+            self.queue += [str(item) for item in data]
+        else:
+            self.queue.append(str(data))
+
+
+class TextProcessor(DataProcessor):
+    def validate(self, data: Any) -> bool:
+        if isinstance(data, list):
+            return (all(isinstance(item, str) for item in data))
+        else:
+            return isinstance(data, str)
+
+    def ingest(self, data: str | list[str]) -> None:
+        if not self.validate(data):
+            raise ValueError("Improper data type, should be text")
         if isinstance(data, list):
             self.queue += [str(item) for item in data]
         else:
@@ -79,10 +92,35 @@ def test_num_processor() -> None:
         print(f"Numeric value {i}: {value}")
 
 
+def test_text_processor() -> None:
+    print("\nTesting Text Processor...")
+    processor = TextProcessor()
+    test_validate = 42
+    print(
+        f"Trying to validate input '{test_validate}':",
+        processor.validate(test_validate))
+
+    test_processing = ['Hello', 'Nexus', 'World']
+    try:
+        processor.ingest(test_processing)
+        print("Processing data: ", processor.queue)
+    except Exception as error:
+        print("Got exception:", error)
+
+    try:
+        i, value = processor.output()
+        print("Extracting 1 value...",
+              f"\nText value {i}: {value}"
+              )
+    except IndexError as error:
+        print("Got exception:", error)
+
+
 def main() -> None:
     print("=== Code Nexus - Data Processor ===")
 
-    test_num_processor()
+    # test_num_processor()
+    test_text_processor()
 
 
 if __name__ == "__main__":
