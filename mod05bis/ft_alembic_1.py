@@ -11,6 +11,8 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
+    # Outside main() on purpose: keeps the traceback to a single frame,
+    # matching the expected output of the subject.
     print(
         "Now show that not all functions can be reached\n"
         "This will raise an exception!")
