@@ -117,9 +117,9 @@ def main() -> None:
     else:
         print("API Access: 403 Forbidden")
 
-    print(f"Log Level: {config["LOG_LEVEL"]}")
+    print(f"Log Level: {config['LOG_LEVEL']}")
     print("Remote Network: "
-          f"{'Online' if config["ZION_ENDPOINT"] else 'Offline'}"
+          f"{'Online' if config['ZION_ENDPOINT'] else 'Offline'}"
           )
 
     if mode == "production":
