@@ -27,16 +27,14 @@ class DataProcessor(ABC):
 class NumericProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         if isinstance(data, list):
-            return (
-                all((isinstance(item, (int, float))
+            return (all((isinstance(item, (int, float))
                     and not isinstance(item, bool))
                     for item in data)
-                )
+                    )
         else:
             return (
                 isinstance(data, (int, float))
-                and not isinstance(data, bool)
-            )
+                and not isinstance(data, bool))
 
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
@@ -77,26 +75,16 @@ class LogProcessor(DataProcessor):
         else:
             return self._is_str_dict(data)
 
-    # TODO: compare and correct!
-    # def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
-    #     if not self.validate(data):
-    #         raise ValueError("Improper data type, "
-    #                          "dict of string key-value pairs")
-    #     if not isinstance(data, list):
-    #         data = [data]
-    #     for log in data:
-    #         level = log.get("log_level", "UNKNOWN")
-    #         message = log.get("log_message", "")
-    #         self.queue.append(f"{level}: {message}")
-
-    def ingest(self, data: dict[str, str]) -> None:
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
             raise ValueError("Improper data type, "
                              "dict of string key-value pairs")
-        if isinstance(data, list):
-            self.queue += [item for item in data]
-        else:
-            self.queue.append(data)
+        if not isinstance(data, list):
+            data = [data]
+        for log in data:
+            level = log.get("log_level", "UNKNOWN")
+            message = log.get("log_message", "")
+            self.queue.append(f"{level}: {message}")
 
 
 def test_num_processor() -> None:
@@ -105,7 +93,7 @@ def test_num_processor() -> None:
 
     test_validate = [42, "Hello"]
     for test in test_validate:
-        print(f"Trying to validate input {test}:",
+        print(f"Trying to validate input '{test}':",
               processor.validate(test))
 
     test_ingest = "foo"
@@ -116,7 +104,7 @@ def test_num_processor() -> None:
     except Exception as error:
         print("Got exception:", error)
 
-    test_processing = [1, 2, 3, 4, 5]
+    test_processing: list[int | float] = [1, 2, 3, 4, 5]
     processor.ingest(test_processing)
     print("Processing data: ", test_processing)
 
@@ -158,8 +146,8 @@ def test_log_processor() -> None:
 
     test_validate = 'Hello'
     print(
-            f"Trying to validate input '{test_validate}':",
-            processor.validate(test_validate))
+        f"Trying to validate input '{test_validate}':",
+        processor.validate(test_validate))
 
     test_processing = [
         {'log_level': 'NOTICE',
@@ -176,8 +164,7 @@ def test_log_processor() -> None:
     print(f"Extracting {extract_count} values...")
     for _ in range(extract_count):
         i, value = processor.output()
-        # print(f"Log entry {i}: {value}")
-        print(f"Log entry {i}: {value['log_level']}: {value['log_message']}")
+        print(f"Log entry {i}: {value}")
 
 
 def main() -> None:
