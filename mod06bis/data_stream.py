@@ -4,8 +4,8 @@ from abc import ABC, abstractmethod
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self.queue = []
-        self.rank = 0
+        self.queue: list[str] = []
+        self.rank: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -16,6 +16,8 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
+        if not self.queue:
+            raise IndexError("No data in queue")
         rank = self.rank
         self.rank += 1
         item = self.queue.pop(0)
@@ -25,16 +27,14 @@ class DataProcessor(ABC):
 class NumericProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         if isinstance(data, list):
-            return (
-                all((isinstance(item, (int, float))
+            return (all((isinstance(item, (int, float))
                     and not isinstance(item, bool))
                     for item in data)
-                )
+                    )
         else:
             return (
                 isinstance(data, (int, float))
-                and not isinstance(data, bool)
-            )
+                and not isinstance(data, bool))
 
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
@@ -45,13 +45,54 @@ class NumericProcessor(DataProcessor):
             self.queue.append(str(data))
 
 
+class TextProcessor(DataProcessor):
+    def validate(self, data: Any) -> bool:
+        if isinstance(data, list):
+            return (all(isinstance(item, str) for item in data))
+        else:
+            return isinstance(data, str)
+
+    def ingest(self, data: str | list[str]) -> None:
+        if not self.validate(data):
+            raise ValueError("Improper data type, should be text")
+        if isinstance(data, list):
+            self.queue += [str(item) for item in data]
+        else:
+            self.queue.append(str(data))
+
+
+class LogProcessor(DataProcessor):
+    def _is_str_dict(self, data: Any) -> bool:
+        return (isinstance(data, dict) and
+                all((isinstance(key, str) and
+                    isinstance(value, str))
+                    for (key, value) in data.items())
+                )
+
+    def validate(self, data: Any) -> bool:
+        if isinstance(data, list):
+            return (all(self._is_str_dict(item) for item in data))
+        else:
+            return self._is_str_dict(data)
+
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
+        if not self.validate(data):
+            raise ValueError("Improper data type, "
+                             "dict of string key-value pairs")
+        if not isinstance(data, list):
+            data = [data]
+        for log in data:
+            level = log.get("log_level", "UNKNOWN")
+            message = log.get("log_message", "")
+            self.queue.append(f"{level}: {message}")
+
+
 class DataStream():
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
 
     def register_processor(
-            self, proc: DataProcessor
-            ) -> None:
+            self, proc: DataProcessor) -> None:
         self.processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
@@ -62,10 +103,10 @@ class DataStream():
                     proc.ingest(data)
                     handled = True
                     break
-                if not handled:
-                    print(
-                        "DataStream error - Can't process element in stream:",
-                        data)
+            if not handled:
+                print(
+                    "DataStream error - Can't process element in stream:",
+                    data)
 
     def print_processors_stats(self) -> None:
         print("== DataStream statistics ==")
@@ -80,7 +121,7 @@ class DataStream():
                       f"remaining {remaining} on processor")
 
 
-def main():
+def main() -> None:
     print("=== Code Nexus - Data Stream ===")
     data_batch = [
         'Hello world', [3.14, -1, 2.71],
@@ -89,8 +130,7 @@ def main():
              'log_message': 'Telnet access! Use ssh instead'},
             {'log_level': 'INFO',
              'log_message': 'User wil is connected'}
-        ], 42, ['Hi', 'five']
-        ]
+        ], 42, ['Hi', 'five']]
 
     print("\nInitialize Data Stream...")
     stream = DataStream()
@@ -101,6 +141,24 @@ def main():
 
     print(f"\nSend first batch of data on stream: {data_batch}")
     stream.process_stream(data_batch)
+    stream.print_processors_stats()
+
+    print("\nRegistering other data processors")
+    stream.register_processor(TextProcessor())
+    stream.register_processor(LogProcessor())
+    print("Send the same batch again")
+    stream.process_stream(data_batch)
+    stream.print_processors_stats()
+
+    consum_data = [("Numeric", 3), ("Text", 2), ("Log", 1)]
+    print("\nConsume some elements from the data processors: ", end='')
+    print(", ".join(f"{name} {k}" for name, k in consum_data))
+
+    for proc in stream.processors:
+        for name, k in consum_data:
+            if type(proc).__name__ == f"{name}Processor":
+                for _ in range(k):
+                    proc.output()
     stream.print_processors_stats()
 
 
