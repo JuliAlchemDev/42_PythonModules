@@ -3,29 +3,6 @@ from ex3.creatures import Creature
 import ex4
 
 
-# def battle(
-#         opponents: list[tuple[ex3.CreatureFactory,
-#                               ex4.BattleStrategy]]) -> None:
-
-#     presentation: list[str] = []
-#     fighters: list[tuple[Creature, ex4.BattleStrategy]] = []
-
-#     print("\n* Battle *")
-#     for factory, strategy in opponents:
-#         creature = factory.create_base()
-#         fighters.append((creature, strategy))
-#         presentation.append(creature.describe())
-
-#     print("\n vs.\n".join(presentation))
-#     print(" now fight!")
-
-#     try:
-#         for fighter, strategy in fighters:
-#             print(strategy.act(fighter))
-#     except ex4.StrategyError as error:
-#         print(error)
-
-# ========= Compare =========!
 def battle(
         opponents: list[tuple[ex3.CreatureFactory,
                               ex4.BattleStrategy]]) -> None:
@@ -70,7 +47,8 @@ def main() -> None:
             f"({creature.__class__.__name__}"
             f"+{strategy.__class__.__name__.replace('Strategy', '')})")
 
-    print(f" [ {", ".join(presentation)} ]")
+    joined = ", ".join(presentation)
+    print(f" [ {joined} ]")
 
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
@@ -83,24 +61,16 @@ def main() -> None:
     strategy_3 = ex4.AggressiveStrategy()
     opponents.append((factory_3, strategy_3))
     factory_4 = ex3.FlameFactory()
-    strategy_4 = ex4.NormalStrategy()
+    strategy_4 = ex4.AggressiveStrategy()
     opponents.append((factory_4, strategy_4))
-
-    # Remove Test
-    factory_5 = ex3.TransformCreatureFactory()
-    strategy_5 = ex4.AggressiveStrategy()
-    opponents.append((factory_5, strategy_5))
-    factory_6 = ex3.TransformCreatureFactory()
-    strategy_6 = ex4.NormalStrategy()
-    opponents.append((factory_6, strategy_6))
-    # Remove Test
 
     for factory, strategy in opponents:
         creature = factory.create_base()
         presentation.append(
             f"({creature.__class__.__name__}"
             f"+{strategy.__class__.__name__.replace('Strategy', '')})")
-    print(f" [ {", ".join(presentation)} ]")
+    joined = ", ".join(presentation)
+    print(f" [ {joined} ]")
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
     battle(opponents)
