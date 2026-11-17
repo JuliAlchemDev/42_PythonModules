@@ -9,7 +9,7 @@ class ExportPlugin(Protocol):
         ...
 
 
-class CSVExport:
+class CSVExport():
     def process_output(
         self,
             data: list[tuple[int, str]]) -> None:
@@ -17,7 +17,7 @@ class CSVExport:
         print(",".join(item for _, item in data))
 
 
-class JSONExport:
+class JSONExport():
     def process_output(
         self,
             data: list[tuple[int, str]]) -> None:
@@ -180,14 +180,14 @@ def main() -> None:
     stream.process_stream(data_batch)
     stream.print_processors_stats()
 
-    cvs = CSVExport()
-    plugin_name = type(cvs).__name__.replace("Export", "")
+    csv = CSVExport()
+    plugin_name = type(csv).__name__.replace("Export", "")
     count = 3
     print(
         "\n"
         f"Send {count} processed data from each processor"
         f" to a {plugin_name} plugin:")
-    stream.output_pipeline(count, cvs)
+    stream.output_pipeline(count, csv)
 
     stream.print_processors_stats()
 
