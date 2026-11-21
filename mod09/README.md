@@ -1,109 +1,43 @@
-{
-    // code --list-extensions
+# Python Module 09 — Discover Pydantic Models & Validation
 
-  // ===== General Config =====
-  "files.autoSave": "afterDelay",
-  "security.workspace.trust.untrustedFiles": "open",
-  "workbench.colorTheme": "Dracula Theme",
-  "workbench.editor.empty.hint": "hidden",
+## Exercises Overview
 
-  // ===== Git, GitHub & Copilot =====
-  "git.autofetch": true,
-  "github.copilot.enable": {
-    "*": false
-  },
+### Exercise 0: Space Station Data
 
-  // ===== Native Formatter =====
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
+Create a validated data model for a space station with `BaseModel` and `Field`, and handle validation errors when the data is invalid.
+
+**Concepts**:
+
+- Defining models by inheriting from `BaseModel`
+- Field constraints with `Field()`: `min_length`, `max_length`, `ge` and `le`
+- Default values (`is_operational: bool = True`) and optional fields (`str | None`)
+- Automatic type conversion (e.g. `datetime` fields)
+- Catching `ValidationError` and reading its messages with `error.errors()`
 
 
-  // ===== Error Lens Config =====
-  "workbench.colorCustomizations": {
-    "editorError.foreground": "#ff79c6",
-    "editorWarning.foreground": "#FFB86C",
-    "editorInfo.foreground": "#8be8fd64",
+### Exercise 1: Alien Contact Logs
 
-    "errorLens.errorForeground": "#ff79c6",
-    "errorLens.warningForeground": "#FFB86C",
-    "errorLens.infoForeground": "#8be8fd64",
-    "errorLens.hintForeground": "#BD93F9",
+Validate alien contact reports with an enum and custom business rules that depend on several fields at once.
 
-    "errorLens.errorBackground": "#ff79c51f",
-    "errorLens.warningBackground": "#443522",
-    "errorLens.infoBackground": "#8be8fd1c",
-    "errorLens.hintBackground": "#292D3E",
+**Concepts**:
 
-    "errorLens.errorMessageBackground": "#ff79c51f",
-    "errorLens.warningMessageBackground": "#443522",
-    "errorLens.infoMessageBackground": "#223344",
-    "errorLens.hintMessageBackground": "#292D3E"
-  },
+- Enumerations with `Enum` (and reading their value with `.value`)
+- Custom validation of the whole model with `@model_validator(mode="after")`
+- Raising `ValueError` inside a validator (Pydantic wraps it in a `ValidationError`)
+- Cross-field business rules (contact type vs. witnesses, verification and signal strength)
+- Returning `self` from the validator, typed with `typing.Self`
 
-  // ===== Editor Config =====
-  "editor.formatOnSave": false,
-  "editor.renderWhitespace": "all",
+### Exercise 2: Space Crew Management
 
-  "[c]": {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": false,
-  },
-  "[h]": {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": false,
-  },
-  "[python]": {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-  },
+Model a mission with a nested crew and validate safety rules that depend on the whole crew.
 
-  // ===== Files Config =====
-  "files.trimTrailingWhitespace": true,
-  "files.insertFinalNewline": true,
-  "files.exclude": {
-    "**/*.o": true
-  },
+**Concepts**:
 
-  // ===== Python Config =====
-  "python.createEnvironment.trigger": "off",
+- Nested models: a model as the type of another model's field (`list[CrewMember]`)
+- Size constraints on lists with `Field(min_length=..., max_length=...)`
+- Automatic validation and conversion of nested dictionaries into model instances
+- Cross-model validation with `@model_validator(mode="after")` over the whole crew
+- Checking collections with `any()` and `all()`
+- Cleaning validation messages (removing the `Value error, ` prefix added by Pydantic)
 
-  // ===== Spell Checker Config =====
-  "cSpell.language": "en,es",
-  "cSpell.userWords": [
-    "flake8",
-    "mypy",
-    "PostgreSQL",
-    "pycache",
-    "pyenv",
-    "pyproject",
-    "subfolders",
-    "venv"
-  ],
-}
-
-
-
-    // "python.defaultInterpreterPath": "/opt/pyenv/versions/3.13.1/bin/python3",
-    // "python.analysis.typeCheckingMode": "off",
-    // "python.createEnvironment.trigger": "off",
-
-    // "flake8.path": [
-    //     "/home/iualkhim/.local/bin/flake8"
-    // ],
-    // "flake8.importStrategy": "fromEnvironment",
-    // "flake8.interpreter": ["/opt/pyenv/versions/3.13.1/bin/python3"],
-
-    // "mypy-type-checker.path": [
-    //     "/home/iualkhim/.local/bin/mypy"
-    // ],
-    // "mypy-type-checker.args": [
-    //     "--strict"
-    // ],
-    // "mypy-type-checker.importStrategy": "fromEnvironment",
-    // "mypy-type-checker.interpreter": ["/opt/pyenv/versions/3.13.1/bin/python3"],
-    // "files.autoSave": "afterDelay"
 
