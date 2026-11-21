@@ -6,7 +6,11 @@ from typing import Self
 
 class ContactType(Enum):
     """
-    Types of contact
+    Types of contact.
+
+    Using an Enum limits the field to a fixed set of values: Pydantic
+    accepts a ContactType member or its string value ("radio", ...) and
+    rejects anything else.
     """
     RADIO = "radio"
     VISUAL = "visual"
@@ -15,8 +19,11 @@ class ContactType(Enum):
 
 
 class AlienContact(BaseModel):
+    """Validated report of an alien contact."""
+
+    # Field() constraints are checked first, field by field.
     contact_id: str = Field(min_length=5, max_length=15)
-    timestamp: datetime = datetime.now()
+    timestamp: datetime
     location: str = Field(min_length=3, max_length=100)
     contact_type: ContactType
     signal_strength: float = Field(ge=0.0, le=10.0)
@@ -25,8 +32,12 @@ class AlienContact(BaseModel):
     message_received: str | None = Field(default=None, max_length=500)
     is_verified: bool = False
 
+    # mode="after" runs once every field has passed its own validation, so
+    # here all the values are already converted and safe to compare.
     @model_validator(mode="after")
     def validate_contact_rules(self) -> Self:
+        # Business rules that depend on one or several fields at once.
+        # Raising ValueError makes Pydantic report it as a ValidationError.
         if not self.contact_id.startswith("AC"):
             raise ValueError('Contact ID must start with "AC" (Alien Contact)')
         if self.contact_type.value == "physical" and not self.is_verified:
@@ -41,10 +52,12 @@ class AlienContact(BaseModel):
             raise ValueError(
                 "Strong signals (> 7.0) "
                 "should include received messages")
+        # A validator in mode="after" must return the model itself.
         return self
 
 
 def test_valid() -> None:
+    """Create a contact that follows every rule and display it."""
     print("Valid contact report:")
     new_contact = AlienContact(
         contact_id="AC_2024_001",
@@ -52,6 +65,7 @@ def test_valid() -> None:
         contact_type=ContactType.RADIO,
         signal_strength=8.5,
         duration_minutes=45,
+        timestamp=datetime.now(),
         witness_count=5,
         message_received="Greetings from Zeta Reticuli"
     )
@@ -67,8 +81,11 @@ def test_valid() -> None:
 
 
 def test_error() -> None:
+    """Create a contact that breaks a custom rule and show the error."""
     try:
         print("Expected validation error:")
+        # Every field is valid on its own, but a telepathic contact with
+        # only 1 witness breaks the rule in validate_contact_rules.
         new_contact = AlienContact(
             contact_id="AC_2026_042",
             location="Carrer d'Albert Einstein, 11, Barcelona",
@@ -76,9 +93,11 @@ def test_error() -> None:
             signal_strength=9.5,
             duration_minutes=2,
             witness_count=1,
+            timestamp=datetime.now(),
             message_received="@channel RECORDATORIO VERY MUY IMPORTANTE"
         )
 
+        # Never reached with this data: the line above already failed.
         print(f"ID: {new_contact.contact_id}")
         print(f"Type: {new_contact.contact_type.value}")
         print(f"Location: {new_contact.location}")
@@ -88,6 +107,8 @@ def test_error() -> None:
         print(f"Message: '{new_contact.message_received}'")
 
     except ValidationError as error:
+        # Pydantic adds the "Value error, " prefix to messages coming from
+        # a ValueError, so it is removed to show only our own text.
         for err in error.errors():
             print(err['msg'].replace("Value error, ", ""))
 
